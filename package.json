@@ -7,7 +7,17 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "vitest"
+    "test": "vitest",
+    "security-audit": "tsx src/security-audit/runner.ts --all",
+    "test:timing": "tsx src/security-audit/runner.ts --timing",
+    "test:replay": "tsx src/security-audit/runner.ts --replay",
+    "test:time-window": "tsx src/security-audit/runner.ts --time-window",
+    "test:forgery": "tsx src/security-audit/runner.ts --forgery",
+    "test:brute-force": "tsx src/security-audit/runner.ts --brute-force",
+    "test:rate-limit": "tsx src/security-audit/runner.ts --rate-limit",
+    "test:entropy": "tsx src/security-audit/runner.ts --entropy",
+    "audit:quick": "tsx src/security-audit/runner.ts --timing --replay --entropy",
+    "audit:full": "tsx src/security-audit/runner.ts --all --duration 60 --output all --output-dir ./reports"
   },
   "dependencies": {
     "axios": "^1.6.0",
