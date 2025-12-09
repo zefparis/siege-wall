@@ -130,4 +130,6 @@ export interface VerifyResult {
   statusCode?: number;
   error?: string;
   responseTimeMs: number;
+  qsigValid?: boolean;
+  b3Valid?: boolean;
 }
