@@ -125,17 +125,19 @@ export function useWebSocket() {
         setConnected(false);
         wsRef.current = null;
         
-        // Fallback simulation si déconnecté
-        startSimulation();
+        // Reconnect after delay
+        reconnectTimeoutRef.current = window.setTimeout(connect, 3000);
         };
 
         ws.onerror = (error) => {
         console.error('[WS] WebSocket error:', error);
-        startSimulation();
+        if (wsRef.current) {
+          wsRef.current.close();
+        }
         };
     } catch (e) {
         console.error('WebSocket connection failed:', e);
-        startSimulation();
+        reconnectTimeoutRef.current = window.setTimeout(connect, 3000);
     }
   }, [setConnected, setStats, addAttack, updateMilestone, startSimulation]);
 

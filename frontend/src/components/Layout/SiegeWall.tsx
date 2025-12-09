@@ -9,6 +9,7 @@ import { Timeline } from '../Stats/Timeline';
 import { MatrixRain } from '../Effects/MatrixRain';
 import { AttackGlobe } from '../Effects/AttackGlobe';
 import { ConnectionStatus } from '../Core/ConnectionStatus';
+import { VerifyButton } from '../Core/VerifyButton';
 import { ActiveDefenses } from '../Core/ActiveDefenses';
 
 export function SiegeWall() {
@@ -27,6 +28,7 @@ export function SiegeWall() {
               HCS-U7 SIEGE WALL
             </h1>
             <ConnectionStatus />
+            <VerifyButton />
           </div>
           <div className="text-text-secondary text-sm font-mono">
             COGNITIVE AUTHENTICATION DEFENSE SYSTEM

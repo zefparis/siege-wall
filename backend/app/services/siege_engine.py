@@ -196,6 +196,57 @@ class SiegeEngine:
             print(f"[SiegeEngine] Attack execution error: {e}")
             return None
     
+    async def verify_manual_attack(self, payload: str) -> Optional[Attack]:
+        """Execute a manual verification attack."""
+        if not self.hcs_client:
+            self.hcs_client = get_hcs_client()
+
+        try:
+             # Construct a simple payload for manual verification
+            from ..models.attack import AttackPayload
+            attack_payload = AttackPayload(
+                ip_address="127.0.0.1", # Origin of the verifier
+                user_agent="Manual Verification Agent",
+                request_headers={"X-Verify": "true"},
+                payload=payload,
+                timestamp=datetime.utcnow()
+            )
+            
+            # Send to HCS-U7
+            result = await self.hcs_client.authenticate(attack_payload)
+            
+            # Update stats
+            self._attack_count += 1
+            self.stats.total_attacks = self._attack_count
+            
+            # Create attack record for manual verification
+            attack = Attack(
+                id=f"verify_{uuid.uuid4().hex[:8]}",
+                timestamp=datetime.utcnow(),
+                type="Manual Verification",
+                category=AttackCategory.ADVERSARIAL, # Manual attempts are adversarial
+                attacker_id="manual_verifier",
+                attacker_name="Live Verifier",
+                attempt_number=self._attack_count,
+                confidence_score=result.confidence_score,
+                response_time_ms=result.response_time_ms,
+                status=AttackStatus.REJECTED,
+                origin_country="US", # Default for verifier
+            )
+            
+             # Broadcast to clients so they see their own attempt
+            if self._broadcast_callback:
+                await self._broadcast_callback({
+                    "type": "attack",
+                    "data": attack.model_dump(mode='json')
+                })
+            
+            return attack
+            
+        except Exception as e:
+            print(f"[SiegeEngine] Manual verification error: {e}")
+            return None
+
     def get_stats(self) -> SiegeStats:
         """Get current statistics."""
         return self.stats

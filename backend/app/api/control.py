@@ -16,6 +16,24 @@ class ConfigUpdate(BaseModel):
     attack_rate: Optional[int] = None
 
 
+class VerifyRequest(BaseModel):
+    payload: str = "Test Payload"
+
+
+@router.post("/verify", response_model=ControlResponse)
+async def verify_defense(request: VerifyRequest):
+    """Trigger a manual verification attack."""
+    engine = get_siege_engine()
+    
+    # Allow verification even if engine is stopped (it will init client on demand)
+    result = await engine.verify_manual_attack(request.payload)
+    
+    if result:
+        return ControlResponse(success=True, message=f"Verification attack sent. ID: {result.id}")
+    else:
+        return ControlResponse(success=False, message="Verification failed to send")
+
+
 @router.post("/start", response_model=ControlResponse)
 async def start_siege():
     """Start the siege engine."""
