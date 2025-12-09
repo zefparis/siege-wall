@@ -11,7 +11,7 @@ services:
       - key: HCS_API_URL
         value: https://hcs-u7-backend.onrender.com
       - key: HCS_API_KEY
-        sync: false # You will need to enter this in Render Dashboard
+        value: hcs_sk_live_5703dfc70c8241b199153e9e
       - key: MOCK_MODE
         value: false
       - key: REDIS_URL
