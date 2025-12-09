@@ -3,6 +3,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Use local API proxy to avoid CORS issues in production
+const API_BASE = '/api/hcs';
 const HCS_BACKEND_URL = process.env.NEXT_PUBLIC_HCS_BACKEND_URL || 'https://hcs-u7-backend.onrender.com';
 
 interface AuditTest {
@@ -61,7 +63,7 @@ export function SecurityAudit() {
     setAudit(prev => ({ ...prev, tests: [...newTests] }));
     
     try {
-      const healthRes = await fetch(`${HCS_BACKEND_URL}/health`, { 
+      const healthRes = await fetch(`${API_BASE}/health`, { 
         method: 'GET',
         signal: AbortSignal.timeout(10000)
       });
@@ -83,7 +85,7 @@ export function SecurityAudit() {
     // Get a valid code for testing
     let validCode = '';
     try {
-      const signRes = await fetch(`${HCS_BACKEND_URL}/v1/auth/sign`, {
+      const signRes = await fetch(`${API_BASE}/sign`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -107,7 +109,7 @@ export function SecurityAudit() {
       const timings: number[] = [];
       for (let i = 0; i < 5; i++) {
         const start = performance.now();
-        await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+        await fetch(`${API_BASE}/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code: `INVALID_CODE_${i}_${Date.now()}` }),
@@ -138,7 +140,7 @@ export function SecurityAudit() {
     if (validCode) {
       try {
         // First verify
-        const res1 = await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+        const res1 = await fetch(`${API_BASE}/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code: validCode }),
@@ -147,7 +149,7 @@ export function SecurityAudit() {
         const data1 = await res1.json();
         
         // Replay attempt
-        const res2 = await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+        const res2 = await fetch(`${API_BASE}/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code: validCode }),
@@ -175,7 +177,7 @@ export function SecurityAudit() {
     try {
       // Test with obviously expired code pattern
       const expiredCode = 'HCS7-EXPIRED-0000-AAAA-BBBB-CCCC';
-      const res = await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+      const res = await fetch(`${API_BASE}/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: expiredCode }),
@@ -208,7 +210,7 @@ export function SecurityAudit() {
       
       let allRejected = true;
       for (const code of forgedCodes) {
-        const res = await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+        const res = await fetch(`${API_BASE}/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code }),
@@ -242,7 +244,7 @@ export function SecurityAudit() {
       const burstSize = 10;
       
       const promises = Array(burstSize).fill(0).map((_, i) => 
-        fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+        fetch(`${API_BASE}/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code: `BURST_TEST_${i}_${Date.now()}` }),
@@ -272,7 +274,7 @@ export function SecurityAudit() {
     try {
       const codes: string[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch(`${HCS_BACKEND_URL}/v1/auth/sign`, {
+        const res = await fetch(`${API_BASE}/sign`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 

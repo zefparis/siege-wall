@@ -49,7 +49,16 @@ export function useWebSocket(url: string) {
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttemptsRef = useRef(0);
 
+  // Check if we're in production (Vercel) - skip WebSocket if no local siege-wall server
+  const isProduction = typeof window !== 'undefined' && !window.location.hostname.includes('localhost');
+
   const connect = useCallback(() => {
+    // Skip WebSocket connection in production (no siege-wall server deployed)
+    if (isProduction) {
+      console.log('WebSocket disabled in production mode');
+      return;
+    }
+
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
     try {
@@ -126,7 +135,7 @@ export function useWebSocket(url: string) {
     } catch (error) {
       console.error('Failed to create WebSocket:', error);
     }
-  }, [url]);
+  }, [url, isProduction]);
 
   useEffect(() => {
     connect();
