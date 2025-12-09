@@ -180,7 +180,7 @@ function Globe() {
 
 export function AttackGlobe() {
   return (
-    <div className="w-full h-full absolute inset-0 pointer-events-none">
+    <div className="w-full h-full absolute inset-0 pointer-events-none z-0 opacity-60">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
