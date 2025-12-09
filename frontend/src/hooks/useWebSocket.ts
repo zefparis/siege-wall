@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useSiegeStore } from '../store/siegeStore';
-import { WS_URL, INTERVALS } from '../utils/constants';
+import { WS_URL } from '../utils/constants';
 import type { Attack, SiegeStats, Milestone, WSMessage, AttackCategory } from '../types';
 import { COUNTRIES } from '../types';
 
@@ -22,7 +22,7 @@ export function useWebSocket() {
 
     let totalAttacks = 847293; 
     const startTime = Date.now();
-    let lastAttackTime = startTime;
+
 
     simulationIntervalRef.current = window.setInterval(() => {
       // Générer une attaque aléatoire
@@ -46,7 +46,7 @@ export function useWebSocket() {
 
       addAttack(attack);
       totalAttacks++;
-      lastAttackTime = Date.now();
+
 
       // Mettre à jour les stats
       const stats: SiegeStats = {
