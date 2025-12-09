@@ -4,7 +4,13 @@ import type { AttackCategory } from '../types';
 const ENV_API_URL = (import.meta as any).env?.VITE_API_URL;
 const ENV_WS_URL = (import.meta as any).env?.VITE_WS_URL;
 
-export const API_URL = ENV_API_URL || 'http://localhost:8000';
+const formatApiUrl = (url: string | undefined) => {
+  if (!url) return 'http://localhost:8000';
+  if (url.startsWith('http')) return url;
+  return `https://${url}`;
+};
+
+export const API_URL = formatApiUrl(ENV_API_URL);
 
 export const WS_URL = ENV_WS_URL || (API_URL.replace(/^http/, 'ws') + '/ws');
 

@@ -33,7 +33,7 @@ services:
         fromService:
           type: web
           name: siege-wall-backend
-          property: url
+          property: host
 
   # 3. Redis (for Backend state)
   - type: redis
