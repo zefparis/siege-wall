@@ -9,6 +9,7 @@ import { Timeline } from '../Stats/Timeline';
 import { MatrixRain } from '../Effects/MatrixRain';
 import { AttackGlobe } from '../Effects/AttackGlobe';
 import { ConnectionStatus } from '../Core/ConnectionStatus';
+import { ActiveDefenses } from '../Core/ActiveDefenses';
 
 export function SiegeWall() {
   return (
@@ -50,6 +51,7 @@ export function SiegeWall() {
             <IntegrityShield />
             <UptimeCounter />
           </div>
+          <ActiveDefenses />
         </div>
 
         {/* Right Panel - Attack Stream */}
