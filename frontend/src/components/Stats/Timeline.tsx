@@ -41,7 +41,7 @@ export function Timeline() {
 
         {/* Milestone points */}
         <div className="relative flex justify-between">
-          {milestones.map((milestone, index) => (
+          {milestones.map((milestone) => (
             <div
               key={milestone.value}
               className="flex flex-col items-center"
