@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan: #00FFD1;
+  --cyan-dark: #00B894;
+  --cyan-glow: rgba(0, 255, 209, 0.5);
+  --red: #FF4757;
+  --red-dark: #C0392B;
+  --red-glow: rgba(255, 71, 87, 0.5);
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #12121A;
+  --bg-card: #1A1A25;
+  --text-primary: #FFFFFF;
+  --text-secondary: #8B8B9A;
+  --purple: #9B59B6;
+  --orange: #F39C12;
+  --grid-color: rgba(0, 255, 209, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cyan-dark);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
+/* Grid background */
+.grid-bg {
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glow effects */
+.glow-cyan {
+  box-shadow: 0 0 20px var(--cyan-glow);
+}
+
+.glow-red {
+  box-shadow: 0 0 20px var(--red-glow);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px var(--cyan-glow), 0 0 20px var(--cyan-glow);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 10px var(--red-glow), 0 0 20px var(--red-glow);
+}
+
+/* Odometer digit styling */
+.odometer-digit {
+  display: inline-block;
+  width: 1ch;
+  text-align: center;
+  transition: transform 0.2s ease-out;
+}
+
+/* Card styling */
+.card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 255, 209, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.card-glow {
+  box-shadow: 
+    0 0 20px rgba(0, 255, 209, 0.1),
+    inset 0 0 20px rgba(0, 255, 209, 0.05);
+}
+
+/* Attack stream item */
+.attack-item {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Rejected flash */
+.flash-red {
+  animation: flashRed 0.5s ease-out;
+}
+
+@keyframes flashRed {
+  0% {
+    background-color: rgba(255, 71, 87, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Pulse animation for milestones */
+.pulse-milestone {
+  animation: pulseMilestone 1s ease-out;
+}
+
+@keyframes pulseMilestone {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--cyan-glow);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px var(--cyan-glow);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--cyan-glow);
+  }
+}
+
+/* Matrix rain character */
+.matrix-char {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan);
+  opacity: 0.1;
+  font-size: 14px;
+  position: absolute;
+  animation: matrixFall linear infinite;
+}
+
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Shield pulse */
+.shield-pulse {
+  animation: shieldPulse 0.3s ease-out;
+}
+
+@keyframes shieldPulse {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+/* Hexagon shape */
+.hexagon {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Status indicator */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-dot.connected {
+  background-color: var(--cyan);
+}
+
+.status-dot.disconnected {
+  background-color: var(--red);
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
