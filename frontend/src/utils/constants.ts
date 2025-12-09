@@ -1,10 +1,12 @@
 import type { AttackCategory } from '../types';
 
 // WebSocket URL
-export const WS_URL = (import.meta as any).env?.VITE_WS_URL || 'ws://localhost:8000/ws';
+const ENV_API_URL = (import.meta as any).env?.VITE_API_URL;
+const ENV_WS_URL = (import.meta as any).env?.VITE_WS_URL;
 
-// API URL
-export const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
+export const API_URL = ENV_API_URL || 'http://localhost:8000';
+
+export const WS_URL = ENV_WS_URL || (API_URL.replace(/^http/, 'ws') + '/ws');
 
 // Category colors
 export const CATEGORY_COLORS: Record<AttackCategory, string> = {
