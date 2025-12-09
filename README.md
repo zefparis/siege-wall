@@ -85,12 +85,16 @@ Open `http://localhost:3001` to view the real-time attack dashboard:
 - **Success Rate**: Percentage of attacks that bypassed security (should be 0%)
 - **Avg Response**: Average backend response time
 - **Live Feed**: Real-time attack results
+- **Live Verification**: Interactive "Test Defense" button to verify system responsiveness in real-time
 
 ## Success Criteria
 
 The HCS-U7 backend is considered secure if:
 
-- ✅ Success rate = **0.000000%**
+- Success rate = **0.000000%**
+- No breach alerts
+- All attack types consistently rejected
+- Response times are consistent (no timing leaks)
 - ✅ No breach alerts
 - ✅ All attack types consistently rejected
 - ✅ Response times are consistent (no timing leaks)
