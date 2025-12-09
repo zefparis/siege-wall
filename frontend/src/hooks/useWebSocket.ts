@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { useSiegeStore } from '../store/siegeStore';
 import { WS_URL, INTERVALS } from '../utils/constants';
 import type { Attack, SiegeStats, Milestone, WSMessage, AttackCategory } from '../types';
+import { COUNTRIES } from '../types';
 
 const SIMULATION_MODE = true; // Activer la simulation par défaut pour la démo Vercel
 
@@ -27,19 +28,20 @@ export function useWebSocket() {
       // Générer une attaque aléatoire
       const categories: AttackCategory[] = ['BRUTE_FORCE', 'AI_IMITATION', 'TIMING', 'REPLAY', 'NETWORK', 'CRYPTO', 'ADVERSARIAL', 'SWARM'];
       const category = categories[Math.floor(Math.random() * categories.length)];
+      const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
       
       const attack: Attack = {
         id: crypto.randomUUID(),
         timestamp: new Date().toISOString(),
-        sourceIp: `${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`,
-        category,
         type: `${category.toLowerCase()}_attack`,
-        status: 'BLOCKED', // HCS-U7 bloque tout !
-        riskScore: 0.8 + Math.random() * 0.2, 
-        details: {
-          userAgent: 'Bot/1.0',
-          payload: 'Simulated payload'
-        }
+        category,
+        attacker_id: `actor_${Math.floor(Math.random() * 1000)}`,
+        attacker_name: `Threat Actor ${Math.floor(Math.random() * 1000)}`,
+        attempt_number: Math.floor(Math.random() * 10) + 1,
+        confidence_score: 0.8 + Math.random() * 0.2,
+        response_time_ms: 15 + Math.random() * 20,
+        status: 'REJECTED', // HCS-U7 bloque tout !
+        origin_country: country
       };
 
       addAttack(attack);
@@ -48,13 +50,14 @@ export function useWebSocket() {
 
       // Mettre à jour les stats
       const stats: SiegeStats = {
-        totalAttacks,
-        blockedAttacks: totalAttacks, // 100% blocked
+        total_attacks: totalAttacks,
+        success_rate: 100, // 100% blocked
         breaches: 0,
-        activeThreats: Math.floor(Math.random() * 50),
-        avgResponseTime: 15 + Math.random() * 20, // ms
-        uptime: Math.floor((Date.now() - startTime) / 1000),
-        lastAttack: new Date().toISOString()
+        active_vectors: Math.floor(Math.random() * 50),
+        attacks_per_second: 5,
+        total_vectors: 8,
+        uptime_seconds: Math.floor((Date.now() - startTime) / 1000),
+        start_time: new Date(startTime).toISOString()
       };
       
       setStats(stats);
