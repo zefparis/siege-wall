@@ -91,7 +91,7 @@ export default function SiegeWallDashboard() {
               <p className="text-gray-500 text-sm">
                 🏰 <span className="text-cyan-400">HCS-U7 Siege Wall</span> • 
                 Patents FR2514274 & FR2514546 • 
-                © {new Date().getFullYear()} IA Solution
+                © 2025 IA Solution
               </p>
               <p className="text-xs text-gray-600">
                 <span className="text-green-400 font-bold">{stats.successfulAttacks} breaches</span> since deployment • 

@@ -40,8 +40,8 @@ export function useWebSocket(url: string) {
     failedAttacks: 0,
     attacksByType: {},
     avgResponseTime: 0,
-    startTime: new Date().toISOString(),
-    lastAttack: new Date().toISOString(),
+    startTime: '',
+    lastAttack: '',
   });
   const [attacks, setAttacks] = useState<AttackResult[]>([]);
   const [breaches, setBreaches] = useState<AttackResult[]>([]);
