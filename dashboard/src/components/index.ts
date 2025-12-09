@@ -6,3 +6,4 @@ export { AttackTypeChart } from './AttackTypeChart';
 export { HallOfShame } from './HallOfShame';
 export { GlobalMap } from './GlobalMap';
 export { SecurityLayers } from './SecurityLayers';
+export { SecurityAudit } from './SecurityAudit';

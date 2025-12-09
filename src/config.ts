@@ -3,7 +3,7 @@ config();
 
 export const CONFIG = {
   hcs: {
-    backendUrl: process.env.HCS_BACKEND_URL || 'https://hcs-u7-backend-production.up.railway.app',
+    backendUrl: process.env.HCS_BACKEND_URL || 'https://hcs-u7-backend.onrender.com',
     apiKey: process.env.HCS_API_KEY || '',
   },
   siege: {

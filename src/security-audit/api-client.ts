@@ -32,15 +32,12 @@ export class SecurityAuditClient {
     this.baseUrl = CONFIG.hcs.backendUrl;
   }
 
-  async sign(profile: {
-    element?: string;
-    cognition?: { form?: number; logic?: number; visual?: number; synthesis?: number; creativity?: number };
-  }, score: number): Promise<SignResponse> {
+  async sign(userId: string, score: number): Promise<SignResponse> {
     try {
       const response = await fetch(`${this.baseUrl}/v1/auth/sign`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profile, score }),
+        body: JSON.stringify({ userId, score }),
       });
 
       if (response.ok) {

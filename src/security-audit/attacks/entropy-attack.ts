@@ -17,7 +17,7 @@ export async function runEntropyAnalysis(client: SecurityAuditClient): Promise<E
   
   // Collect CE samples over time
   for (let i = 0; i < SAMPLE_COUNT; i++) {
-    const signResponse = await client.sign({ element: 'E' }, 75);
+    const signResponse = await client.sign(`entropy_test_${Date.now()}_${i}`, 75);
     
     if (signResponse.success && signResponse.data?.hcsCode) {
       const code = signResponse.data.hcsCode;

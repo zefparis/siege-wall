@@ -10,10 +10,11 @@ import {
   HallOfShame, 
   GlobalMap,
   SecurityLayers,
+  SecurityAudit,
 } from '@/components';
 
 // WebSocket URL - connects to the Siege Wall backend
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3001';
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3002';
 
 export default function SiegeWallDashboard() {
   const { stats, attacks, connected } = useWebSocket(WS_URL);
@@ -56,6 +57,15 @@ export default function SiegeWallDashboard() {
               <LiveFeed attacks={attacks} />
             </section>
           </div>
+
+          {/* Security Audit - Auto-runs on startup */}
+          <section className="mb-8">
+            <h2 className="text-lg font-bold text-emerald-400 mb-3 flex items-center gap-2">
+              <span>🔒</span>
+              <span>Live Security Audit</span>
+            </h2>
+            <SecurityAudit />
+          </section>
 
           {/* Secondary Grid - Charts & Security */}
           <div className="grid lg:grid-cols-2 gap-6 mb-8">

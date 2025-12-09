@@ -20,16 +20,7 @@ export async function runForgeryAttack(client: SecurityAuditClient): Promise<For
   
   for (let i = 0; i < VALID_CODES_TO_COLLECT; i++) {
     const signResponse = await client.sign(
-      {
-        element: elements[i % 4],
-        cognition: {
-          form: 40 + i * 2,
-          logic: 50 + i,
-          visual: 45 + i,
-          synthesis: 55 - i,
-          creativity: 50,
-        },
-      },
+      `forgery_test_${Date.now()}_${i}`,
       70 + i
     );
     

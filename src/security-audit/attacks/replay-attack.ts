@@ -13,7 +13,7 @@ export async function runReplayAttack(client: SecurityAuditClient): Promise<Repl
   
   // Step 1: Generate a valid code from the backend
   console.log('   Generating valid code from backend...');
-  const signResponse = await client.sign({ element: 'E' }, 75);
+  const signResponse = await client.sign(`replay_test_${Date.now()}`, 75);
   
   if (!signResponse.success || !signResponse.data?.hcsCode) {
     console.log('   ⚠️ Could not generate valid code - testing with captured code pattern');

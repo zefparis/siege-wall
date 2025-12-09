@@ -15,7 +15,7 @@ export async function runTimeWindowAttack(client: SecurityAuditClient): Promise<
   
   // First, get a valid code to understand the current TW format
   console.log('   Generating reference code...');
-  const signResponse = await client.sign({ element: 'E' }, 75);
+  const signResponse = await client.sign(`tw_test_${Date.now()}`, 75);
   
   let originalTW: number;
   let originalCode: string;
