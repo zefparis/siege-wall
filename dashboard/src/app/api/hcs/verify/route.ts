@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const HCS_BACKEND_URL = process.env.NEXT_PUBLIC_HCS_BACKEND_URL || 'https://hcs-u7-backend.onrender.com';
+const HCS_BACKEND_URL = 'https://hcs-u7-backend.onrender.com';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,11 +12,17 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     });
     
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
+    const text = await response.text();
+    try {
+      const data = JSON.parse(text);
+      return NextResponse.json(data, { status: response.status });
+    } catch {
+      return NextResponse.json({ valid: false, error: text }, { status: response.status });
+    }
   } catch (error: any) {
+    console.error('HCS verify error:', error);
     return NextResponse.json(
-      { error: 'Backend unreachable', message: error.message },
+      { valid: false, error: 'Backend unreachable', message: error.message },
       { status: 503 }
     );
   }
