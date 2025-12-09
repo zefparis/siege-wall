@@ -4,7 +4,7 @@ import { WS_URL } from '../utils/constants';
 import type { Attack, SiegeStats, Milestone, WSMessage, AttackCategory } from '../types';
 import { COUNTRIES } from '../types';
 
-const SIMULATION_MODE = true; // Activer la simulation par défaut pour la démo Vercel
+const SIMULATION_MODE = (import.meta as any).env.VITE_SIMULATION_MODE !== 'false'; // Par défaut en simulation, 'false' pour le réel
 
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null);
