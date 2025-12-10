@@ -291,7 +291,8 @@ function getDashboardHTML(): string {
     const maxReconnectAttempts = 10;
     
     function connect() {
-      ws = new WebSocket('ws://' + location.host);
+      const wsProtocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+      ws = new WebSocket(wsProtocol + location.host);
       
       ws.onopen = () => {
         document.getElementById('connection-status').textContent = '🟢 Connected';
