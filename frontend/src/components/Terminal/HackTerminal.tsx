@@ -2,8 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Play, Zap, RotateCcw } from 'lucide-react';
 
-// Direct URL to HCS-U7 backend for real attack verification
-const HCS_BACKEND_URL = 'https://hcs-u7-backend.onrender.com';
+// Use Vercel API route as proxy to avoid CORS, fallback to direct URL for local dev
+const getVerifyUrl = () => {
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+    return '/api/verify'; // Vercel serverless function (no CORS issues)
+  }
+  return 'https://hcs-u7-backend.onrender.com/v1/verify'; // Direct for local dev
+};
 
 interface TerminalLine {
   id: number;
@@ -134,8 +139,8 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
       // Generate a fake HCS code to test against the real backend
       const fakeCode = `HCS-${vector.id.toUpperCase()}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
       
-      // Call the real HCS-U7 backend /v1/verify endpoint
-      const response = await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
+      // Call the real HCS-U7 backend via proxy or direct
+      const response = await fetch(getVerifyUrl(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: fakeCode }),
@@ -158,8 +163,9 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
       } else {
         useDemo = false; // Any response from real backend counts
       }
-    } catch (error) {
-      // Backend not available, use demo mode
+    } catch (error: any) {
+      // Backend not available or CORS error, use demo mode
+      console.error('HCS Backend error:', error?.message || error);
       useDemo = true;
       elapsed = Math.floor(Math.random() * 30) + 15; // Simulate 15-45ms response
     }
