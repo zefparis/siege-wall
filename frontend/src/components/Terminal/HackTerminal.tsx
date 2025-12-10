@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Play, Zap, RotateCcw } from 'lucide-react';
 
-// Direct URL to HCS-U7 backend for attack verification
+// Direct URL to HCS-U7 backend for real attack verification
 const HCS_BACKEND_URL = 'https://hcs-u7-backend.onrender.com';
 
 interface TerminalLine {
