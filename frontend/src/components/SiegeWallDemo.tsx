@@ -210,20 +210,12 @@ export default function SiegeWallDemo() {
       }
       
       const startTime = Date.now();
-      // Direct call to Railway backend
-      const apiUrl = 'https://hcs-u7-backend-production.up.railway.app/api/verify-human';
+      // Direct call to Render backend
+      const apiUrl = 'https://hcs-u7-backend.onrender.com/v1/verify';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          hcsToken: attackCode,
-          hcsCode: attackCode,
-          context: {
-            ip: '203.0.113.99',
-            userAgent: 'Custom Attack Terminal',
-            timestamp: Date.now(),
-          }
-        }),
+        body: JSON.stringify({ code: attackCode }),
       });
       
       const elapsed = Date.now() - startTime;

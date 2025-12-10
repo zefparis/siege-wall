@@ -283,7 +283,7 @@ export const ATTACK_VECTORS = [
 // ============================================================================
 // ATTACK EXECUTOR - REAL HTTP REQUESTS
 // ============================================================================
-const HCS_BACKEND_URL = 'https://hcs-u7-backend-production.up.railway.app';
+const HCS_BACKEND_URL = 'https://hcs-u7-backend.onrender.com';
 
 // Direct call to Railway backend
 const getBackendUrl = () => HCS_BACKEND_URL;
@@ -304,8 +304,7 @@ export const executeAttack = async (
   try {
     // REAL HTTP REQUEST - NOT A SIMULATION
     // Use proxy in production, direct URL in development
-    const isProxy = targetUrl === '/api/verify';
-    const fetchUrl = isProxy ? targetUrl : `${targetUrl}/api/verify-human`;
+    const fetchUrl = `${targetUrl}/v1/verify`;
     
     const response = await fetch(fetchUrl, {
       method: 'POST',
@@ -315,17 +314,7 @@ export const executeAttack = async (
         'X-Attack-Vector': payload.vector,
         'X-Attack-Method': payload.method,
       },
-      body: JSON.stringify({
-        hcsToken: payload.code,
-        hcsCode: payload.code,
-        rotatingCode: payload.code,
-        context: {
-          ip: `203.0.113.${Math.floor(Math.random() * 255)}`, // Fake attacker IP
-          userAgent: 'Malicious Bot v1.0',
-          timestamp: payload.timestamp || Date.now(),
-          ...(payload.payload || {})
-        }
-      }),
+      body: JSON.stringify({ code: payload.code }),
     });
     
     const responseTime = Date.now() - startTime;
