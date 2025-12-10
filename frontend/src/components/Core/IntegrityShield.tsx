@@ -20,7 +20,7 @@ export function IntegrityShield() {
     <div className="relative flex items-center justify-center">
       {/* Outer glow ring */}
       <motion.div
-        className="absolute w-48 h-48 rounded-full"
+        className="absolute w-32 h-32 md:w-48 md:h-48 rounded-full"
         style={{
           background: 'radial-gradient(circle, rgba(0,255,209,0.2) 0%, transparent 70%)',
         }}
@@ -32,7 +32,7 @@ export function IntegrityShield() {
       />
 
       {/* Hexagon container */}
-      <div className="relative hexagon w-40 h-40 bg-bg-card border-2 border-cyan/30 flex items-center justify-center">
+      <div className="relative hexagon w-28 h-28 md:w-40 md:h-40 bg-bg-card border-2 border-cyan/30 flex items-center justify-center">
         {/* Inner glow */}
         <div 
           className="absolute inset-0 hexagon"
@@ -49,8 +49,8 @@ export function IntegrityShield() {
           transition={{ duration: 0.3 }}
           className="relative z-10 flex flex-col items-center"
         >
-          <Shield className="w-16 h-16 text-cyan" strokeWidth={1.5} />
-          <div className="mt-2 text-cyan font-display text-sm tracking-wider">
+          <Shield className="w-10 h-10 md:w-16 md:h-16 text-cyan" strokeWidth={1.5} />
+          <div className="mt-1 md:mt-2 text-cyan font-display text-xs md:text-sm tracking-wider">
             HCS-U7
           </div>
         </motion.div>
@@ -65,8 +65,8 @@ export function IntegrityShield() {
       </div>
 
       {/* Integrity text */}
-      <div className="absolute -bottom-8 text-center">
-        <span className="text-cyan font-mono text-lg font-bold">
+      <div className="absolute -bottom-6 md:-bottom-8 text-center">
+        <span className="text-cyan font-mono text-sm md:text-lg font-bold">
           INTEGRITY: 100%
         </span>
       </div>

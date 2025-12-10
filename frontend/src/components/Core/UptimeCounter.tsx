@@ -20,14 +20,14 @@ export function UptimeCounter() {
   }, []);
 
   return (
-    <div className="card card-glow p-6 flex flex-col items-center">
-      <div className="text-text-secondary text-xs tracking-wider mb-2">
+    <div className="card card-glow p-3 md:p-6 flex flex-col items-center">
+      <div className="text-text-secondary text-[10px] md:text-xs tracking-wider mb-1 md:mb-2">
         UPTIME
       </div>
-      <div className="font-mono text-3xl font-bold text-cyan text-glow-cyan">
+      <div className="font-mono text-xl md:text-3xl font-bold text-cyan text-glow-cyan">
         {formatUptime(localUptime)}
       </div>
-      <div className="mt-2 text-xs text-text-secondary">
+      <div className="mt-1 md:mt-2 text-[10px] md:text-xs text-text-secondary">
         CONTINUOUS DEFENSE
       </div>
     </div>

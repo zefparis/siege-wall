@@ -14,57 +14,64 @@ import { ActiveDefenses } from '../Core/ActiveDefenses';
 
 export function SiegeWall() {
   return (
-    <div className="relative w-full h-full bg-bg-primary grid-bg overflow-hidden">
+    <div className="relative w-full min-h-full bg-bg-primary grid-bg overflow-x-hidden overflow-y-auto">
       {/* Background Effects */}
-      <MatrixRain />
+      <div className="hidden lg:block">
+        <MatrixRain />
+      </div>
       <AttackGlobe />
       
-      {/* Main Content Grid */}
-      <div className="relative z-10 w-full h-full p-4 grid grid-cols-12 grid-rows-6 gap-4">
+      {/* Main Content */}
+      <div className="relative z-10 w-full p-3 md:p-4 flex flex-col gap-4 lg:gap-4">
+        
         {/* Header Row */}
-        <div className="col-span-12 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <h1 className="font-display text-2xl text-cyan tracking-wider">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-2 md:gap-4">
+            <h1 className="font-display text-lg md:text-2xl text-cyan tracking-wider">
               HCS-U7 SIEGE WALL
             </h1>
             <ConnectionStatus />
             <VerifyButton />
           </div>
-          <div className="text-text-secondary text-sm font-mono">
+          <div className="text-text-secondary text-xs md:text-sm font-mono hidden md:block">
             COGNITIVE AUTHENTICATION DEFENSE SYSTEM
           </div>
-        </div>
+        </header>
 
         {/* Main Counter - Center Top */}
-        <div className="col-span-12 row-span-1 flex flex-col items-center justify-center">
+        <section className="flex flex-col items-center justify-center py-2 md:py-4">
           <MainCounter />
-        </div>
+        </section>
 
-        {/* Left Panel - Stats */}
-        <div className="col-span-3 row-span-3 flex flex-col gap-4">
-          <StatsPanel />
-          <HallOfShame />
-        </div>
-
-        {/* Center - Shield and Key Metrics */}
-        <div className="col-span-6 row-span-3 flex flex-col items-center justify-center gap-6">
-          <div className="flex items-center justify-center gap-12 w-full">
-            <SuccessRate />
-            <IntegrityShield />
-            <UptimeCounter />
+        {/* Main Content Grid - Responsive */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          {/* Left Panel - Stats (Mobile: Full width, Desktop: 3 cols) */}
+          <div className="lg:col-span-3 flex flex-col gap-4 order-2 lg:order-1">
+            <StatsPanel />
+            <HallOfShame />
           </div>
-          <ActiveDefenses />
-        </div>
 
-        {/* Right Panel - Attack Stream */}
-        <div className="col-span-3 row-span-3">
-          <AttackStream />
+          {/* Center - Shield and Key Metrics (Mobile: Full width, Desktop: 6 cols) */}
+          <div className="lg:col-span-6 flex flex-col items-center justify-center gap-4 md:gap-6 order-1 lg:order-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 lg:gap-12 w-full">
+              <SuccessRate />
+              <IntegrityShield />
+              <UptimeCounter />
+            </div>
+            <ActiveDefenses />
+          </div>
+
+          {/* Right Panel - Attack Stream (Mobile: Full width, Desktop: 3 cols) */}
+          <div className="lg:col-span-3 order-3 min-h-[300px] lg:min-h-0">
+            <AttackStream />
+          </div>
         </div>
 
         {/* Bottom - Timeline */}
-        <div className="col-span-12 row-span-1">
+        <section className="mt-2">
           <Timeline />
-        </div>
+        </section>
       </div>
     </div>
   );
