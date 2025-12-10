@@ -16,14 +16,14 @@ export function Timeline() {
     : 100;
 
   return (
-    <div className="card card-glow p-3 md:p-4">
-      <h2 className="font-display text-xs text-cyan tracking-wider mb-3 md:mb-4">
+    <div className="card card-glow p-3 lg:p-4">
+      <h2 className="font-display text-xs text-cyan tracking-wider mb-3 lg:mb-4">
         MILESTONE PROGRESS
       </h2>
 
       {/* Scrollable container on mobile */}
-      <div className="overflow-x-auto pb-2 -mx-3 px-3 md:mx-0 md:px-0">
-        <div className="relative min-w-[500px] md:min-w-0">
+      <div className="overflow-x-auto pb-2 -mx-3 px-3 lg:mx-0 lg:px-0">
+        <div className="relative min-w-[500px] lg:min-w-0">
           {/* Progress line background */}
           <div className="absolute top-3 left-0 right-0 h-0.5 bg-bg-secondary" />
           
@@ -59,15 +59,15 @@ export function Timeline() {
                   }`}
                 >
                   {milestone.reached ? (
-                    <CheckCircle className="w-5 h-5 md:w-6 md:h-6" />
+                    <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6" />
                   ) : (
-                    <Circle className="w-5 h-5 md:w-6 md:h-6" />
+                    <Circle className="w-5 h-5 lg:w-6 lg:h-6" />
                   )}
                 </motion.div>
 
                 {/* Label */}
                 <span
-                  className={`mt-1.5 md:mt-2 font-mono text-[10px] md:text-xs ${
+                  className={`mt-1.5 lg:mt-2 font-mono text-[10px] lg:text-xs ${
                     milestone.reached ? 'text-cyan' : 'text-text-secondary'
                   }`}
                 >
@@ -76,7 +76,7 @@ export function Timeline() {
 
                 {/* Reached indicator */}
                 {milestone.reached && (
-                  <span className="text-[10px] md:text-xs text-cyan/50 mt-0.5">✓</span>
+                  <span className="text-[10px] lg:text-xs text-cyan/50 mt-0.5">✓</span>
                 )}
               </div>
             ))}
@@ -86,7 +86,7 @@ export function Timeline() {
 
       {/* Next milestone info */}
       {nextMilestone && (
-        <div className="mt-3 md:mt-4 text-center text-[10px] md:text-xs text-text-secondary">
+        <div className="mt-3 lg:mt-4 text-center text-[10px] lg:text-xs text-text-secondary">
           Next: <span className="text-cyan font-mono">{nextMilestone.label}</span>
           {' '}attacks ({progressPercent.toFixed(1)}% complete)
         </div>

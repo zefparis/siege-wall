@@ -75,7 +75,7 @@ export function MainCounter() {
   return (
     <div className={`flex flex-col items-center ${isPulsing ? 'pulse-milestone' : ''}`}>
       {/* Main Counter */}
-      <div className="flex items-center font-mono text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white text-glow-cyan">
+      <div className="flex items-center font-mono text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white text-glow-cyan">
         {chars.map((char, index) => (
           char === ',' ? (
             <span key={`comma-${index}`} className="text-cyan/50 mx-0.5 md:mx-1">,</span>
@@ -86,14 +86,14 @@ export function MainCounter() {
       </div>
       
       {/* Label */}
-      <div className="mt-1 md:mt-2 text-cyan text-sm md:text-lg tracking-[0.2em] md:tracking-[0.3em] font-display">
+      <div className="mt-1 lg:mt-2 text-cyan text-sm lg:text-lg tracking-[0.2em] lg:tracking-[0.3em] font-display">
         ATTACKS BLOCKED
       </div>
 
       {/* Breaches Counter */}
-      <div className="mt-2 md:mt-4 flex items-center gap-2">
-        <span className="text-text-secondary text-xs md:text-sm">BREACHES:</span>
-        <span className="font-mono text-xl md:text-2xl text-danger text-glow-red font-bold">
+      <div className="mt-2 lg:mt-4 flex items-center gap-2">
+        <span className="text-text-secondary text-xs lg:text-sm">BREACHES:</span>
+        <span className="font-mono text-xl lg:text-2xl text-danger text-glow-red font-bold">
           {breaches}
         </span>
       </div>

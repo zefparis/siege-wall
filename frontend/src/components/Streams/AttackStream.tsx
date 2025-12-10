@@ -7,19 +7,19 @@ export function AttackStream() {
   return (
     <div className="card card-glow h-full flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="p-2 md:p-3 border-b border-cyan/20">
-        <h2 className="font-display text-xs md:text-sm text-cyan tracking-wider">
+      <div className="p-2 lg:p-3 border-b border-cyan/20">
+        <h2 className="font-display text-xs lg:text-sm text-cyan tracking-wider">
           ATTACK STREAM
         </h2>
-        <p className="text-[10px] md:text-xs text-text-secondary mt-0.5 md:mt-1">
+        <p className="text-[10px] lg:text-xs text-text-secondary mt-0.5 lg:mt-1">
           Real-time rejection feed
         </p>
       </div>
 
       {/* Attack List */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-1.5 md:p-2 space-y-1">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-1.5 lg:p-2 space-y-1">
         {attacks.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-text-secondary text-xs md:text-sm">
+          <div className="flex items-center justify-center h-full text-text-secondary text-xs lg:text-sm">
             Waiting for attacks...
           </div>
         ) : (
