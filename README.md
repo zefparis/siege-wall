@@ -16,7 +16,7 @@ The Siege Wall continuously attacks the HCS-U7 backend to prove its resistance a
 │  ┌─────────────┐     ┌─────────────┐     ┌──────────────┐  │
 │  │ Attack      │────▶│ HCS-U7      │────▶│ Results      │  │
 │  │ Engine      │     │ Backend     │     │ Dashboard    │  │
-│  │ (Node.js)   │◀────│ (Railway)   │◀────│ (Next.js)    │  │
+│  │ (Node.js)   │◀────│ (Render)    │◀────│ (Next.js)    │  │
 │  └─────────────┘     └─────────────┘     └──────────────┘  │
 │        │                                        ▲          │
 │        │         WebSocket (live updates)       │          │

@@ -142,7 +142,7 @@ npm run security-audit -- --all --output all --output-dir ./reports
 
 Set in `.env`:
 ```env
-HCS_BACKEND_URL=https://hcs-u7-backend-production.up.railway.app
+HCS_BACKEND_URL=https://hcs-u7-backend.onrender.com
 HCS_API_KEY=HCS-U7|V:7.0|...
 ```
 

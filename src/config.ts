@@ -12,7 +12,7 @@ export const CONFIG = {
     enableAiAttacks: process.env.ENABLE_AI_ATTACKS === 'true',
   },
   dashboard: {
-    port: parseInt(process.env.DASHBOARD_PORT || '3001'),
+    port: parseInt(process.env.DASHBOARD_PORT || process.env.PORT || '3001'),
     wsPort: parseInt(process.env.WEBSOCKET_PORT || '3002'),
   },
   log: {
