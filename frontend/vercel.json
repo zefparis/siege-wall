@@ -3,14 +3,6 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "installCommand": "npm install",
-  "functions": {
-    "api/*.ts": {
-      "runtime": "@vercel/node@3.0.0"
-    }
-  },
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*" }
-  ],
   "env": {
     "VITE_API_URL": "https://hcs-u7-backend.onrender.com",
     "VITE_WS_URL": "wss://hcs-u7-backend.onrender.com",

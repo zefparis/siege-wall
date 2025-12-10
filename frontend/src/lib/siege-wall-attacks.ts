@@ -285,13 +285,8 @@ export const ATTACK_VECTORS = [
 // ============================================================================
 const HCS_BACKEND_URL = 'https://hcs-u7-backend-production.up.railway.app';
 
-// Use Vercel API proxy in production to avoid CORS
-const getBackendUrl = () => {
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    return '/api/verify'; // Vercel serverless proxy
-  }
-  return HCS_BACKEND_URL;
-};
+// Direct call to Railway backend
+const getBackendUrl = () => HCS_BACKEND_URL;
 
 export const executeAttack = async (
   attackType: string,

@@ -210,10 +210,8 @@ export default function SiegeWallDemo() {
       }
       
       const startTime = Date.now();
-      // Try proxy first, fallback to direct backend
-      const apiUrl = window.location.hostname === 'localhost' 
-        ? 'https://hcs-u7-backend-production.up.railway.app/api/verify-human'
-        : '/api/verify';
+      // Direct call to Railway backend
+      const apiUrl = 'https://hcs-u7-backend-production.up.railway.app/api/verify-human';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
