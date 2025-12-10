@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Play, Zap, RotateCcw } from 'lucide-react';
-import { API_URL } from '../../utils/constants';
+
+// Direct URL to HCS-U7 backend for attack verification
+const HCS_BACKEND_URL = 'https://hcs-u7-backend.onrender.com';
 
 interface TerminalLine {
   id: number;
@@ -133,7 +135,7 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
       const fakeCode = `HCS-${vector.id.toUpperCase()}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
       
       // Call the real HCS-U7 backend /v1/verify endpoint
-      const response = await fetch(`${API_URL}/v1/verify`, {
+      const response = await fetch(`${HCS_BACKEND_URL}/v1/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: fakeCode }),
