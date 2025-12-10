@@ -30,7 +30,7 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
   const [autoMode, setAutoMode] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
   const lineIdRef = useRef(0);
-  const autoIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Auto-scroll terminal
   useEffect(() => {
