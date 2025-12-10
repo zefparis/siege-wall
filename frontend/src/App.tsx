@@ -31,7 +31,7 @@ function App() {
               : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
           }`}
         >
-          SIEGE DEMO
+          SIEGE WALL
         </button>
       </div>
       
