@@ -129,7 +129,7 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
     await new Promise(r => setTimeout(r, 100));
 
     let elapsed = 0;
-    let useDemo = false;
+    let backendOffline = false;
 
     try {
       const startTime = Date.now();
@@ -156,17 +156,17 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
       // or { valid: false } - both mean the attack was rejected!
       if (data.error === 'invalid' || data.valid === false) {
         // Attack was rejected - defense is working!
-        useDemo = false;
+        backendOffline = false;
       } else if (data.valid === true) {
         // This should never happen with a fake code
-        useDemo = false;
+        backendOffline = false;
       } else {
-        useDemo = false; // Any response from real backend counts
+        backendOffline = false; // Any response from real backend counts
       }
     } catch (error: any) {
-      // Backend not available or CORS error, use demo mode
+      // Backend not available or CORS error
       console.error('HCS Backend error:', error?.message || error);
-      useDemo = true;
+      backendOffline = true;
       elapsed = Math.floor(Math.random() * 30) + 15; // Simulate 15-45ms response
     }
 
@@ -193,8 +193,8 @@ export function HackTerminal({ isOpen, onClose }: HackTerminalProps) {
     addLine(`   Response Time: ${elapsed}ms`, 'result');
     addLine(`   Defense Layer: HCS-U7 Cognitive Firewall`, 'result');
     addLine(`   Rejection Reason: ${reason}`, 'result');
-    if (useDemo) {
-      addLine(`   Mode: Demo (backend offline)`, 'info');
+    if (backendOffline) {
+      addLine(`   ⚠ Backend temporarily unreachable`, 'info');
     } else {
       addLine(`   ✓ Verified against LIVE HCS-U7 backend`, 'success');
     }

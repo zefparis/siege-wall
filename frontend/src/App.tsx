@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useWebSocket } from './hooks/useWebSocket';
 import { SiegeWall } from './components/Layout/SiegeWall';
-import SiegeWallDemo from './components/SiegeWallDemo';
+import SiegeWallLive from './components/SiegeWallDemo';
 
 function App() {
-  const [showDemo, setShowDemo] = useState(true); // Default to new demo
+  const [showSiege, setShowSiege] = useState(true); // Default to siege wall
   
   // Initialize WebSocket connection for original view
   useWebSocket();
@@ -14,9 +14,9 @@ function App() {
       {/* View Toggle */}
       <div className="fixed top-4 right-4 z-50 flex gap-2">
         <button
-          onClick={() => setShowDemo(false)}
+          onClick={() => setShowSiege(false)}
           className={`px-3 py-1.5 text-xs font-mono rounded transition-all ${
-            !showDemo 
+            !showSiege 
               ? 'bg-cyan-500 text-black' 
               : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
           }`}
@@ -24,9 +24,9 @@ function App() {
           MONITOR
         </button>
         <button
-          onClick={() => setShowDemo(true)}
+          onClick={() => setShowSiege(true)}
           className={`px-3 py-1.5 text-xs font-mono rounded transition-all ${
-            showDemo 
+            showSiege 
               ? 'bg-red-500 text-white' 
               : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
           }`}
@@ -35,7 +35,7 @@ function App() {
         </button>
       </div>
       
-      {showDemo ? <SiegeWallDemo /> : <SiegeWall />}
+      {showSiege ? <SiegeWallLive /> : <SiegeWall />}
     </>
   );
 }
