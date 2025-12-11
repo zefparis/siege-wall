@@ -1,10 +1,26 @@
+# =============================================================================
+# HCS-U7 Siege Wall - Backend Dependencies
+# =============================================================================
+
+# Web framework
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
+
+# WebSocket support
 websockets>=14.0
+
+# Configuration
 python-dotenv>=1.0.0
 pydantic>=2.10.0
 pydantic-settings>=2.6.0
+
+# Data stores
 redis>=5.2.0
+
+# HTTP client
 httpx>=0.28.0
-openai>=1.58.0
-anthropic>=0.40.0
+
+# NOTE: openai and anthropic removed - not currently used
+# Add back when implementing real AI attackers:
+# openai>=1.58.0
+# anthropic>=0.40.0

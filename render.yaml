@@ -11,9 +11,13 @@ services:
       - key: HCS_API_URL
         value: https://hcs-u7-backend.onrender.com
       - key: HCS_API_KEY
-        value: hcs_sk_live_5703dfc70c8241b199153e9e
+        sync: false  # ⚠️ Secret managed via Render dashboard - NEVER commit real keys
       - key: MOCK_MODE
         value: false
+      - key: DEBUG
+        value: false  # Explicitly false in production
+      - key: ALLOWED_ORIGINS
+        value: https://siege-wall-frontend.onrender.com
       - key: REDIS_URL
         fromService:
           type: redis

@@ -1,5 +1,6 @@
 import asyncio
 import random
+import threading
 import uuid
 from datetime import datetime
 from typing import List, Optional, Callable
@@ -9,6 +10,9 @@ from ..models.stats import SiegeStats, AttackerStats
 from ..attackers import ATTACKER_REGISTRY, BaseAttacker
 from ..services.hcs_client import get_hcs_client, HCSClient
 from ..core.config import settings
+from ..core.logging_config import get_logger
+
+logger = get_logger(__name__, component="siege-engine")
 
 
 COUNTRIES = [
@@ -59,7 +63,10 @@ class SiegeEngine:
         self.hcs_client = get_hcs_client()
         self.stats.start_time = datetime.utcnow()
         
-        print(f"[SiegeEngine] Starting with {len(self.attackers)} attackers")
+        logger.info(
+            f"Starting siege engine with {len(self.attackers)} attackers",
+            extra={"attacker_count": len(self.attackers), "rate": settings.ATTACK_RATE_PER_SECOND}
+        )
         
         # Start attack loop
         asyncio.create_task(self._attack_loop())
@@ -71,7 +78,10 @@ class SiegeEngine:
         if self.hcs_client:
             await self.hcs_client.close()
             self.hcs_client = None
-        print("[SiegeEngine] Stopped")
+        logger.info(
+            "Siege engine stopped",
+            extra={"total_attacks": self._attack_count}
+        )
     
     async def _attack_loop(self):
         """Main attack loop - runs continuously."""
@@ -95,7 +105,7 @@ class SiegeEngine:
                 await asyncio.sleep(delay)
                 
             except Exception as e:
-                print(f"[SiegeEngine] Attack error: {e}")
+                logger.error(f"Attack loop error: {e}", extra={"error": str(e)})
                 await asyncio.sleep(1)
     
     async def _stats_broadcast_loop(self):
@@ -125,7 +135,7 @@ class SiegeEngine:
                 await asyncio.sleep(1)
                 
             except Exception as e:
-                print(f"[SiegeEngine] Stats broadcast error: {e}")
+                logger.error(f"Stats broadcast error: {e}", extra={"error": str(e)})
                 await asyncio.sleep(1)
     
     def _select_attacker(self) -> BaseAttacker:
@@ -193,7 +203,10 @@ class SiegeEngine:
             return attack
             
         except Exception as e:
-            print(f"[SiegeEngine] Attack execution error: {e}")
+            logger.error(
+                f"Attack execution error: {e}",
+                extra={"attacker": attacker.name, "error": str(e)}
+            )
             return None
     
     async def verify_manual_attack(self, payload: str) -> Optional[Attack]:
@@ -244,7 +257,7 @@ class SiegeEngine:
             return attack
             
         except Exception as e:
-            print(f"[SiegeEngine] Manual verification error: {e}")
+            logger.error(f"Manual verification error: {e}", extra={"error": str(e)})
             return None
 
     def get_stats(self) -> SiegeStats:
@@ -256,13 +269,23 @@ class SiegeEngine:
         return list(self.attacker_stats.values())
 
 
-# Global singleton
+# Thread-safe singleton
 _siege_engine: Optional[SiegeEngine] = None
+_siege_engine_lock = threading.Lock()
 
 
 def get_siege_engine() -> SiegeEngine:
-    """Get or create the siege engine singleton."""
+    """
+    Get or create the siege engine singleton (thread-safe).
+    Uses double-check locking pattern for thread safety.
+    """
     global _siege_engine
+    
     if _siege_engine is None:
-        _siege_engine = SiegeEngine()
+        with _siege_engine_lock:
+            # Double-check locking pattern
+            if _siege_engine is None:
+                logger.info("Creating new SiegeEngine instance")
+                _siege_engine = SiegeEngine()
+    
     return _siege_engine

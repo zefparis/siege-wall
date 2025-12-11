@@ -1,4 +1,6 @@
 from contextlib import asynccontextmanager
+import logging
+
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,26 +9,46 @@ from .api.stats import router as stats_router
 from .api.control import router as control_router
 from .services.siege_engine import get_siege_engine
 from .core.config import settings
+from .core.logging_config import setup_logging, get_logger
+
+# Setup logging before anything else
+setup_logging(debug=settings.DEBUG, json_format=not settings.DEBUG)
+logger = get_logger(__name__, service="siege-wall-backend")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan handler."""
     # Startup
-    print(f"[App] Starting {settings.APP_NAME}")
+    logger.info(
+        f"Starting {settings.APP_NAME}",
+        extra={
+            "version": "1.0.0",
+            "debug": settings.DEBUG,
+            "mock_mode": settings.MOCK_MODE,
+            "allowed_origins": settings.ALLOWED_ORIGINS
+        }
+    )
     
     # Get siege engine and set broadcast callback
-    engine = get_siege_engine()
-    engine.set_broadcast_callback(manager.broadcast)
+    try:
+        engine = get_siege_engine()
+        engine.set_broadcast_callback(manager.broadcast)
+        logger.info("Siege engine initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize siege engine: {e}", extra={"error": str(e)})
+        raise
     
     # Auto-start siege engine
     await engine.start()
+    logger.info("Siege engine started")
     
     yield
     
     # Shutdown
-    print("[App] Shutting down...")
+    logger.info("Shutting down...")
     await engine.stop()
+    logger.info("Shutdown complete")
 
 
 # Create FastAPI app
@@ -37,13 +59,14 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS middleware
+# CORS middleware - Restricted origins from settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict this
+    allow_origins=settings.ALLOWED_ORIGINS,  # Configured via environment
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
+    max_age=3600,  # Cache preflight requests for 1 hour
 )
 
 # Include routers
@@ -67,10 +90,45 @@ async def root():
             "websocket": "/ws",
             "stats": "/api/stats",
             "attackers": "/api/attackers",
-            "health": "/api/health",
+            "health": "/health",
             "control": "/api/control/*",
         }
     }
+
+
+# Health check endpoint at root level for Docker healthcheck
+@app.get("/health")
+async def root_health_check():
+    """
+    Root-level health check for Docker/Kubernetes probes.
+    Redirects to the detailed health endpoint.
+    """
+    from datetime import datetime
+    from fastapi.responses import JSONResponse
+    
+    try:
+        engine = get_siege_engine()
+        return JSONResponse(
+            content={
+                "status": "healthy",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "siege_engine": {
+                    "running": engine.running,
+                    "total_attacks": engine.stats.total_attacks
+                }
+            },
+            status_code=200
+        )
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return JSONResponse(
+            content={
+                "status": "unhealthy",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "error": str(e)
+            },
+            status_code=503
+        )
 
 
 if __name__ == "__main__":

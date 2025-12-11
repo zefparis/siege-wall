@@ -1,5 +1,40 @@
 node_modules/
 dist/
 *.log
+
+# Environment files - NEVER commit secrets
 .env
 .env.local
+.env.production
+.env.*.local
+*.env
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Build artifacts
+build/
+*.egg-info/
+
+# Test reports
+reports/
+coverage/
