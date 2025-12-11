@@ -111,8 +111,8 @@ export const useAttackResponse = (
       onPulse(1.05, 200);
     }, 200);
 
-    // Debug log
-    if (process.env.NODE_ENV === 'development') {
+    // Debug log (using import.meta.env for Vite)
+    if (import.meta.env.DEV) {
       console.log('[CognitiveBrain] Attack processed:', {
         type: attack.type,
         region,
