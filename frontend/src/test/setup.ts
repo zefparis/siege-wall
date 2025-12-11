@@ -1,6 +1,8 @@
 /**
  * Vitest Setup File
  * Configure testing environment and global mocks
+ * 
+ * Note: This file is only used during test runs, not during build.
  */
 import '@testing-library/jest-dom';
 import { afterEach, vi } from 'vitest';
@@ -43,10 +45,11 @@ class MockWebSocket {
   removeEventListener = vi.fn();
 }
 
-global.WebSocket = MockWebSocket as any;
+// Use globalThis instead of global for browser compatibility
+(globalThis as any).WebSocket = MockWebSocket;
 
 // Mock fetch
-global.fetch = vi.fn(() =>
+(globalThis as any).fetch = vi.fn(() =>
   Promise.resolve({
     ok: true,
     json: () => Promise.resolve({ isHuman: false, error: 'Invalid code' }),
@@ -55,23 +58,25 @@ global.fetch = vi.fn(() =>
 );
 
 // Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
+(globalThis as any).ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
 }));
 
 // Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: vi.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  })),
-});
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  });
+}
