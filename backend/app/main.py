@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
             "version": "1.0.0",
             "debug": settings.DEBUG,
             "mock_mode": settings.MOCK_MODE,
-            "allowed_origins": settings.ALLOWED_ORIGINS
+            "allowed_origins": settings.get_allowed_origins()
         }
     )
     
@@ -62,7 +62,7 @@ app = FastAPI(
 # CORS middleware - Restricted origins from settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,  # Configured via environment
+    allow_origins=settings.get_allowed_origins(),  # Configured via environment
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],

@@ -1,8 +1,25 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header, Depends
 from pydantic import BaseModel
 from typing import Optional
 
 from ..services.siege_engine import get_siege_engine
+from ..core.config import settings
+
+
+async def verify_admin_key(x_admin_key: str = Header(None, alias="X-Admin-Key")):
+    """Verify admin API key for protected endpoints."""
+    if not settings.ADMIN_API_KEY:
+        raise HTTPException(
+            status_code=503,
+            detail="Admin API key not configured on server"
+        )
+    if x_admin_key != settings.ADMIN_API_KEY:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or missing admin API key"
+        )
+    return True
+
 
 router = APIRouter(prefix="/api/control", tags=["control"])
 
@@ -34,9 +51,9 @@ async def verify_defense(request: VerifyRequest):
         return ControlResponse(success=False, message="Verification failed to send")
 
 
-@router.post("/start", response_model=ControlResponse)
+@router.post("/start", response_model=ControlResponse, dependencies=[Depends(verify_admin_key)])
 async def start_siege():
-    """Start the siege engine."""
+    """Start the siege engine. Requires admin API key."""
     engine = get_siege_engine()
     
     if engine.running:
@@ -46,9 +63,9 @@ async def start_siege():
     return ControlResponse(success=True, message="Siege engine started")
 
 
-@router.post("/stop", response_model=ControlResponse)
+@router.post("/stop", response_model=ControlResponse, dependencies=[Depends(verify_admin_key)])
 async def stop_siege():
-    """Stop the siege engine."""
+    """Stop the siege engine. Requires admin API key."""
     engine = get_siege_engine()
     
     if not engine.running:
@@ -58,9 +75,9 @@ async def stop_siege():
     return ControlResponse(success=True, message="Siege engine stopped")
 
 
-@router.post("/reset", response_model=ControlResponse)
+@router.post("/reset", response_model=ControlResponse, dependencies=[Depends(verify_admin_key)])
 async def reset_stats():
-    """Reset siege statistics (requires engine to be stopped)."""
+    """Reset siege statistics. Requires admin API key."""
     engine = get_siege_engine()
     
     if engine.running:

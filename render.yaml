@@ -17,7 +17,7 @@ services:
       - key: DEBUG
         value: false  # Explicitly false in production
       - key: ALLOWED_ORIGINS
-        value: https://siege-wall-frontend.onrender.com
+        value: https://siege-wall-frontend.onrender.com,https://siege-wall.vercel.app
       - key: REDIS_URL
         fromService:
           type: redis
