@@ -5,12 +5,13 @@
  * This is NOT a simulation - actual HTTP requests are made to prove invulnerability.
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, Play, Square, Zap, Target, 
   Activity, AlertTriangle, ChevronRight, Wifi, WifiOff
 } from 'lucide-react';
+import { BrainCanvas, BrainAttack, BRAIN_THEME } from './Brain';
 import {
   AttackVector,
   SiegeStats,
@@ -110,6 +111,30 @@ export default function SiegeWallDemo() {
   
   const siegeControllerRef = useRef<{ stop: () => void } | null>(null);
   const uptimeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  
+  // Attack type to color mapping for brain visualization
+  const attackTypeColors: Record<string, string> = {
+    'brute-force': BRAIN_THEME.frontal,
+    'ai-simulation': BRAIN_THEME.frontal,
+    'timing': BRAIN_THEME.occipital,
+    'replay': BRAIN_THEME.temporal,
+    'adversarial': BRAIN_THEME.parietal,
+    'sql-injection': BRAIN_THEME.frontal,
+    'bot-simulation': BRAIN_THEME.parietal,
+    'celestial-prediction': BRAIN_THEME.temporal,
+    'quantum-bypass': BRAIN_THEME.occipital,
+  };
+  
+  // Convert attacks to BrainAttack format for 3D visualization
+  const brainAttacks: BrainAttack[] = useMemo(() => {
+    return attacks.slice(0, 20).map(attack => ({
+      id: attack.id,
+      type: attack.type,
+      timestamp: attack.timestamp,
+      blocked: attack.status !== 'BREACH',
+      color: attackTypeColors[attack.type] || BRAIN_THEME.primary,
+    }));
+  }, [attacks]);
   
   // Handle new attack result
   const handleAttackComplete = useCallback((attack: AttackVector) => {
@@ -431,102 +456,80 @@ export default function SiegeWallDemo() {
           
           {/* Center Column - Main Display */}
           <div className="col-span-6 flex flex-col items-center">
-            {/* Futuristic Hexagonal Shield */}
-            <motion.div
-              animate={isLive ? { rotateY: [0, 5, 0, -5, 0] } : {}}
-              transition={{ duration: 4, repeat: Infinity }}
-              className="relative mb-6"
-              style={{ perspective: '1000px' }}
-            >
-              {/* Outer Hexagon Glow */}
+            {/* Holographic Brain Visualization */}
+            <div className="relative mb-6">
+              {/* Glow effect container */}
+              <div 
+                className={`
+                  absolute inset-0 rounded-full blur-3xl transition-all duration-700
+                  ${isLive 
+                    ? 'bg-gradient-to-br from-cyan-500/30 via-purple-500/20 to-cyan-500/30 scale-110' 
+                    : 'bg-cyan-500/10 scale-100'
+                  }
+                `}
+                style={{
+                  animation: isLive ? 'pulse 3s ease-in-out infinite' : 'none',
+                }}
+              />
+              
+              {/* 3D Brain Canvas */}
               <div className={`
-                absolute inset-0 transition-all duration-500
-                ${isLive ? 'opacity-100' : 'opacity-30'}
+                relative w-[420px] h-[380px] transition-all duration-500
+                ${isLive ? 'opacity-100' : 'opacity-70'}
               `}>
-                <svg viewBox="0 0 400 350" className="w-[400px] h-[350px]">
-                  <defs>
-                    <linearGradient id="hexGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.5" />
-                      <stop offset="50%" stopColor="#22c55e" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.5" />
-                    </linearGradient>
-                    <filter id="glow">
-                      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                      <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  {/* Outer hexagon */}
-                  <polygon 
-                    points="200,10 370,95 370,255 200,340 30,255 30,95" 
-                    fill="none" 
-                    stroke="url(#hexGlow)" 
-                    strokeWidth="2"
-                    filter="url(#glow)"
-                    className={isLive ? 'animate-pulse' : ''}
-                  />
-                  {/* Inner hexagon */}
-                  <polygon 
-                    points="200,30 350,105 350,245 200,320 50,245 50,105" 
-                    fill="rgba(15,23,42,0.8)" 
-                    stroke="#0ea5e9" 
-                    strokeWidth="1"
-                  />
-                  {/* Circuit lines */}
-                  <path d="M200,30 L200,10 M350,105 L370,95 M350,245 L370,255 M200,320 L200,340 M50,245 L30,255 M50,105 L30,95" 
-                    stroke="#06b6d4" strokeWidth="1" opacity="0.5"/>
-                </svg>
+                <BrainCanvas 
+                  attacks={brainAttacks}
+                  className="w-full h-full"
+                />
               </div>
               
-              {/* Content inside hexagon */}
-              <div className="relative w-[400px] h-[350px] flex flex-col items-center justify-center">
+              {/* Stats Overlay */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                 {/* Attack Counter */}
                 <motion.div
                   key={stats.totalAttacks}
                   initial={{ scale: 1.2, color: '#22c55e' }}
                   animate={{ scale: 1, color: '#ffffff' }}
                   transition={{ duration: 0.3 }}
-                  className="text-7xl font-bold font-mono"
+                  className="text-6xl font-bold font-mono drop-shadow-[0_0_20px_rgba(6,182,212,0.5)]"
                 >
                   {stats.totalAttacks.toLocaleString()}
                 </motion.div>
-                <div className="text-sm text-cyan-400 font-mono tracking-[0.3em] mt-2">
+                <div className="text-sm text-cyan-400 font-mono tracking-[0.3em] mt-1 drop-shadow-lg">
                   ATTACKS BLOCKED
                 </div>
                 
                 {/* Breaches */}
-                <div className="mt-4 flex items-center gap-3">
-                  <span className="text-xs text-slate-500 tracking-wider">BREACHES</span>
-                  <span className={`text-3xl font-bold font-mono ${
-                    stats.breaches > 0 ? 'text-red-500 animate-pulse' : 'text-green-400'
+                <div className="mt-3 flex items-center gap-3">
+                  <span className="text-xs text-slate-400 tracking-wider">BREACHES</span>
+                  <span className={`text-2xl font-bold font-mono ${
+                    stats.breaches > 0 ? 'text-red-500 animate-pulse drop-shadow-[0_0_10px_rgba(239,68,68,0.8)]' : 'text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]'
                   }`}>
                     {stats.breaches}
                   </span>
                 </div>
                 
                 {/* Stats Row */}
-                <div className="mt-4 flex items-center gap-8">
+                <div className="mt-3 flex items-center gap-6 bg-slate-900/60 backdrop-blur-sm rounded-lg px-4 py-2">
                   <div className="text-center">
-                    <div className={`text-xl font-mono font-bold ${
+                    <div className={`text-lg font-mono font-bold ${
                       stats.successRate === 100 ? 'text-green-400' : 'text-red-400'
                     }`}>
-                      {stats.successRate.toFixed(6)}%
+                      {stats.successRate.toFixed(4)}%
                     </div>
-                    <div className="text-[10px] text-slate-500 tracking-wider">SUCCESS RATE</div>
+                    <div className="text-[9px] text-slate-500 tracking-wider">SUCCESS</div>
                   </div>
-                  <div className="w-px h-8 bg-slate-700" />
+                  <div className="w-px h-6 bg-slate-600" />
                   <div className="text-center">
-                    <div className="text-xl font-mono font-bold text-cyan-400">
+                    <div className="text-lg font-mono font-bold text-cyan-400">
                       {formatUptime(stats.uptime)}
                     </div>
-                    <div className="text-[10px] text-slate-500 tracking-wider">UPTIME</div>
+                    <div className="text-[9px] text-slate-500 tracking-wider">UPTIME</div>
                   </div>
                 </div>
                 
                 {/* Defense Status Indicators */}
-                <div className="mt-4 flex items-center gap-2">
+                <div className="mt-2 flex items-center gap-2 bg-slate-900/40 backdrop-blur-sm rounded-full px-3 py-1">
                   {[
                     { color: stats.vectors.cognitive.active ? '#22c55e' : '#475569', label: 'COG' },
                     { color: stats.vectors.celestial.synced ? '#a855f7' : '#475569', label: 'CEL' },
@@ -535,15 +538,18 @@ export default function SiegeWallDemo() {
                   ].map((layer, i) => (
                     <div key={i} className="flex items-center gap-1">
                       <div 
-                        className="w-2 h-2 rounded-full animate-pulse"
-                        style={{ backgroundColor: layer.color }}
+                        className="w-2 h-2 rounded-full"
+                        style={{ 
+                          backgroundColor: layer.color,
+                          boxShadow: layer.color !== '#475569' ? `0 0 8px ${layer.color}` : 'none'
+                        }}
                       />
-                      <span className="text-[10px] font-mono text-slate-500">{layer.label}</span>
+                      <span className="text-[9px] font-mono text-slate-400">{layer.label}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
             
             {/* Custom Attack Input */}
             <div className="w-full max-w-2xl bg-slate-900/80 backdrop-blur-sm rounded-lg border border-slate-700/50 overflow-hidden">
