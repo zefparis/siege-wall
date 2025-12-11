@@ -76,9 +76,6 @@ class Settings(BaseSettings):
                 "API calls will fail!"
             )
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
 
 
 settings = Settings()
