@@ -26,7 +26,6 @@ export class HCSClient {
       timeout: 5000,
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': CONFIG.hcs.apiKey,
       },
     });
   }
@@ -35,7 +34,7 @@ export class HCSClient {
     const start = Date.now();
     
     try {
-      const response = await this.client.post('/api/verify-human', request);
+      const response = await this.client.post('/v1/verify', request);
       
       return {
         ...response.data,

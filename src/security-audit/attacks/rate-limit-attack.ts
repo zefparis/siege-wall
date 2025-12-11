@@ -83,7 +83,7 @@ async function runBurstTest(baseUrl: string, count: number): Promise<{ attempts:
   
   const promises = Array(count).fill(null).map(async () => {
     try {
-      const response = await fetch(`${baseUrl}/api/verify-human`, {
+      const response = await fetch(`${baseUrl}/v1/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
@@ -114,7 +114,7 @@ async function runHeaderBypassTest(baseUrl: string, count: number): Promise<{ at
     const code = generateRandomCode();
     
     try {
-      const response = await fetch(`${baseUrl}/api/verify-human`, {
+      const response = await fetch(`${baseUrl}/v1/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ async function runSlowlorisTest(baseUrl: string, count: number): Promise<{ attem
     const code = generateRandomCode();
     
     try {
-      const response = await fetch(`${baseUrl}/api/verify-human`, {
+      const response = await fetch(`${baseUrl}/v1/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
