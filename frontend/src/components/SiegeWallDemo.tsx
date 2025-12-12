@@ -347,7 +347,7 @@ export default function SiegeWallDemo() {
                 transition-all duration-300 transform hover:scale-105
                 ${isLive 
                   ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/30' 
-                  : 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-black shadow-lg shadow-green-500/30'
+                  : 'bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-black shadow-lg shadow-green-500/30'
                 }
               `}
             >
@@ -463,7 +463,7 @@ export default function SiegeWallDemo() {
                 className={`
                   absolute inset-0 rounded-full blur-3xl transition-all duration-700
                   ${isLive 
-                    ? 'bg-gradient-to-br from-cyan-500/30 via-purple-500/20 to-cyan-500/30 scale-110' 
+                    ? 'bg-linear-to-br from-cyan-500/30 via-purple-500/20 to-cyan-500/30 scale-110' 
                     : 'bg-cyan-500/10 scale-100'
                   }
                 `}

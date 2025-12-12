@@ -66,7 +66,7 @@ export function LiveStream({ attacks }: LiveStreamProps) {
         {/* Terminal */}
         <div className="relative rounded-2xl bg-black border border-white/10 overflow-hidden">
           {/* Terminal header */}
-          <div className="flex items-center gap-2 px-4 py-3 bg-white/[0.02] border-b border-white/5">
+          <div className="flex items-center gap-2 px-4 py-3 bg-white/2 border-b border-white/5">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500/80" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -99,7 +99,7 @@ export function LiveStream({ attacks }: LiveStreamProps) {
                     transition={{ duration: 0.3 }}
                     className="mb-2"
                   >
-                    <div className="flex items-start gap-3 py-2 px-3 rounded-lg hover:bg-white/[0.02] transition-colors">
+                    <div className="flex items-start gap-3 py-2 px-3 rounded-lg hover:bg-white/2 transition-colors">
                       {/* Timestamp */}
                       <span className="text-white/30 text-xs whitespace-nowrap">
                         {new Date(attack.timestamp).toLocaleTimeString()}
@@ -127,7 +127,7 @@ export function LiveStream({ attacks }: LiveStreamProps) {
           </div>
 
           {/* Gradient fade at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-black to-transparent pointer-events-none" />
         </div>
       </motion.div>
     </section>

@@ -41,7 +41,7 @@ export function HallOfShame({ stats }: HallOfShameProps) {
   return (
     <div className="rounded-xl border border-red-500/30 bg-black/60 backdrop-blur-sm overflow-hidden">
       {/* Header */}
-      <div className="px-4 py-4 border-b border-red-500/30 bg-gradient-to-r from-red-500/10 to-transparent">
+      <div className="px-4 py-4 border-b border-red-500/30 bg-linear-to-r from-red-500/10 to-transparent">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-3xl">🏆</span>
@@ -140,7 +140,7 @@ export function HallOfShame({ stats }: HallOfShameProps) {
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-4 border-t border-red-500/30 bg-gradient-to-r from-red-500/5 to-transparent">
+      <div className="px-4 py-4 border-t border-red-500/30 bg-linear-to-r from-red-500/5 to-transparent">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm">
             <span className="text-2xl">💸</span>

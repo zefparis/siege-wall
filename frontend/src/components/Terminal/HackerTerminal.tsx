@@ -394,7 +394,7 @@ export function HackerTerminal({ isOpen, onClose }: HackerTerminalProps) {
                   transition-all
                   ${isExecuting
                     ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-black hover:from-cyan-400 hover:to-cyan-500 shadow-lg shadow-cyan-500/25'
+                    : 'bg-linear-to-r from-cyan-500 to-cyan-600 text-black hover:from-cyan-400 hover:to-cyan-500 shadow-lg shadow-cyan-500/25'
                   }
                 `}
               >

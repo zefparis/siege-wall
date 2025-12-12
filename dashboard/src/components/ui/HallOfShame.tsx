@@ -23,9 +23,9 @@ const MOCK_ATTACKERS: AttackerData[] = [
 ];
 
 function getRankBadge(rank: number) {
-  if (rank === 1) return 'bg-gradient-to-r from-yellow-500 to-amber-500 text-black';
-  if (rank === 2) return 'bg-gradient-to-r from-gray-300 to-gray-400 text-black';
-  if (rank === 3) return 'bg-gradient-to-r from-amber-600 to-amber-700 text-white';
+  if (rank === 1) return 'bg-linear-to-r from-yellow-500 to-amber-500 text-black';
+  if (rank === 2) return 'bg-linear-to-r from-gray-300 to-gray-400 text-black';
+  if (rank === 3) return 'bg-linear-to-r from-amber-600 to-amber-700 text-white';
   return 'bg-white/5 text-white/60';
 }
 
@@ -52,9 +52,9 @@ export function HallOfShame() {
         </div>
 
         {/* Table */}
-        <div className="relative rounded-2xl bg-white/[0.02] border border-white/5 overflow-hidden backdrop-blur-xl">
+        <div className="relative rounded-2xl bg-white/2 border border-white/5 overflow-hidden backdrop-blur-xl">
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/50 pointer-events-none" />
           
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -75,7 +75,7 @@ export function HallOfShame() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1.6 + i * 0.05 }}
-                    className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-white/3 hover:bg-white/2 transition-colors"
                   >
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold ${getRankBadge(attacker.rank)}`}>
@@ -84,7 +84,7 @@ export function HallOfShame() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center border border-white/5">
+                        <div className="w-10 h-10 rounded-xl bg-linear-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center border border-white/5">
                           <span className="text-lg">👤</span>
                         </div>
                         <span className="font-mono font-medium text-white">{attacker.name}</span>

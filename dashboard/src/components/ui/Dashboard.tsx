@@ -1,5 +1,6 @@
 'use client';
 
+import { Home } from 'lucide-react';
 import { Hero } from './Hero';
 import { MetricsGrid } from './MetricsGrid';
 import { HallOfShame } from './HallOfShame';
@@ -38,6 +39,17 @@ export function Dashboard({ stats, attacks, connected }: DashboardProps) {
 
   return (
     <div className="min-h-screen bg-black">
+      {/* Bouton retour à l'accueil */}
+      <div className="fixed top-4 right-4 z-50">
+        <a
+          href="https://hcs-u7.com"
+          className="px-3 py-1.5 text-xs font-mono rounded transition-all bg-slate-800 text-slate-400 hover:bg-slate-700 flex items-center gap-1.5"
+        >
+          <Home className="w-3 h-3" />
+          ACCUEIL
+        </a>
+      </div>
+
       {/* Subtle noise texture */}
       <div 
         className="fixed inset-0 pointer-events-none opacity-[0.015]"
@@ -81,7 +93,7 @@ export function Dashboard({ stats, attacks, connected }: DashboardProps) {
         <footer className="px-4 md:px-8 py-12 border-t border-white/5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-linear-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
                 <span className="text-sm font-bold text-black">H7</span>
               </div>
               <div>

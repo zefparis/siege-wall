@@ -173,8 +173,8 @@ export function GlobalMap() {
           ))}
 
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black pointer-events-none opacity-50" />
+          <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-black pointer-events-none opacity-50" />
 
           {/* Stats overlay */}
           <div className="absolute bottom-4 left-4 right-4 flex justify-between">

@@ -376,7 +376,7 @@ export function SecurityAudit() {
       </div>
 
       {/* Score Display */}
-      <div className="px-4 py-4 border-b border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 to-transparent">
+      <div className="px-4 py-4 border-b border-emerald-500/20 bg-linear-to-r from-emerald-500/5 to-transparent">
         <div className="flex items-center justify-between">
           <div>
             <div className="text-xs text-gray-500 uppercase tracking-wider">Overall Score</div>

@@ -22,8 +22,8 @@ function MetricCard({ icon, label, value, subtext, gradient, delay = 0 }: Metric
       className="group relative"
     >
       {/* Gradient border effect */}
-      <div className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm`} />
-      <div className={`absolute -inset-[1px] rounded-2xl bg-gradient-to-br ${gradient} opacity-20`} />
+      <div className={`absolute -inset-px rounded-2xl bg-linear-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm`} />
+      <div className={`absolute -inset-px rounded-2xl bg-linear-to-br ${gradient} opacity-20`} />
       
       <div className="relative h-full p-6 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/5">
         <div className="flex items-start justify-between mb-4">

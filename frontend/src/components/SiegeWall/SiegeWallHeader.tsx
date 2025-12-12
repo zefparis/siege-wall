@@ -46,7 +46,7 @@ export const SiegeWallHeader: React.FC<SiegeWallHeaderProps> = ({
             transition-all duration-300 transform hover:scale-105
             ${isLive 
               ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/30' 
-              : 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-black shadow-lg shadow-green-500/30'
+              : 'bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-black shadow-lg shadow-green-500/30'
             }
           `}
         >

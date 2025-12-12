@@ -112,7 +112,7 @@ export function GlobalMap({ attacks }: GlobalMapProps) {
   return (
     <div className="relative rounded-xl overflow-hidden border border-cyan-500/30 bg-black/80">
       {/* Glow overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-linear-to-b from-cyan-500/5 to-transparent pointer-events-none z-10" />
       
       {/* Globe container */}
       <div className="h-[400px] md:h-[500px]">

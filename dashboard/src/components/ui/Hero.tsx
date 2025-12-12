@@ -43,11 +43,11 @@ export function Hero({ breachRate, totalAttacks, isConnected }: HeroProps) {
         transition={{ delay: 0.3, duration: 0.6 }}
         className="text-5xl md:text-7xl font-bold text-center mb-4 tracking-tight"
       >
-        <span className="bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
+        <span className="bg-linear-to-t from-white via-white to-white/40 bg-clip-text text-transparent">
           HCS-U7
         </span>
         <span className="text-white/20 mx-3">×</span>
-        <span className="bg-gradient-to-b from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
+        <span className="bg-linear-to-b from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
           Siege Wall
         </span>
       </motion.h1>
@@ -68,9 +68,9 @@ export function Hero({ breachRate, totalAttacks, isConnected }: HeroProps) {
         transition={{ delay: 0.5, duration: 0.8 }}
         className="relative group"
       >
-        <div className="absolute -inset-1 bg-gradient-to-r from-red-600/20 via-red-500/10 to-red-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-1 bg-linear-to-t from-red-600/20 via-red-500/10 to-red-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
-        <div className="relative px-12 py-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl">
+        <div className="relative px-12 py-8 rounded-2xl bg-white/2 border border-white/5 backdrop-blur-xl">
           <p className="text-xs font-medium text-white/40 uppercase tracking-[0.2em] text-center mb-3">
             Breach Rate
           </p>
@@ -105,7 +105,7 @@ export function Hero({ breachRate, totalAttacks, isConnected }: HeroProps) {
         whileTap={{ scale: 0.98 }}
         className="mt-12 relative group"
       >
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300 animate-pulse" />
+        <div className="absolute -inset-0.5 bg-linear-to-t from-cyan-500 to-violet-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300 animate-pulse" />
         <div className="relative px-8 py-4 bg-black rounded-xl border border-white/10 flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,240,255,0.8)]" />
           <span className="font-medium text-white">Launch Full Siege</span>

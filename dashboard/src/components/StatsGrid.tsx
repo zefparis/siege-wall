@@ -108,7 +108,7 @@ function StatCard({ label, value, prefix = '', suffix = '', color, icon, subtext
       transition={{ duration: 0.3 }}
       className={`
         relative overflow-hidden rounded-xl border backdrop-blur-sm
-        bg-gradient-to-br ${config.bg} ${config.border}
+        bg-linear-to-br ${config.bg} ${config.border}
         p-4 md:p-6 shadow-lg ${config.glow}
         hover:shadow-xl transition-all duration-300
       `}
@@ -119,7 +119,7 @@ function StatCard({ label, value, prefix = '', suffix = '', color, icon, subtext
       
       {/* Scanline effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent animate-scan opacity-50" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-white/5 to-transparent animate-scan opacity-50" />
       </div>
 
       {/* Content */}

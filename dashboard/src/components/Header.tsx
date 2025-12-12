@@ -39,7 +39,7 @@ export function Header({ connected, totalAttacks }: HeaderProps) {
         transition={{ delay: 0.3, duration: 0.8 }}
         className="space-y-2"
       >
-        <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent animate-gradient">
+        <h2 className="text-xl md:text-2xl font-bold bg-linear-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent animate-gradient">
           🏰 LIVE ATTACK DEFENSE SYSTEM
         </h2>
         
@@ -82,7 +82,7 @@ export function Header({ connected, totalAttacks }: HeaderProps) {
       </motion.div>
 
       {/* Decorative lines */}
-      <div className="absolute left-0 right-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+      <div className="absolute left-0 right-0 bottom-0 h-px bg-linear-to-r from-transparent via-cyan-500/50 to-transparent" />
     </header>
   );
 }
